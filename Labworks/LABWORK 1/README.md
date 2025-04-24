@@ -83,10 +83,10 @@ and
   hydra -L userlist.txt -P mypass.txt ftp://<TARGET_IP> -t 4 -vV
   ```
 
-(![alt text](image-8.png))
+![alt text](screenshots/image-8.png)
 
 
-(![alt text](image-9.png))
+(![alt text](screenshots/image-9.png))
 
 
 
@@ -115,11 +115,11 @@ and
 hydra -l userlist.txt -P mypass.txt telnet://192.168.111.128 -t 4 -vV -w 3
 
 
-![alt text](image-28.png)
+![alt text](screenshots/image-28.png)
 
 
 
-![alt text](image-29.png)
+![alt text](screenshots/image-29.png)
 
 
 
@@ -192,25 +192,25 @@ Analyze the results to identify successful logins.
 
 
 
-![alt text](image-19.png)
+![alt text](screenshots/image-19.png)
 
 
 ## 3. Then,send the intercept inside the proxy to intruder
 
 
-![alt text](image-20.png)
+![alt text](screenshots/image-20.png)
 
 
 ## 4. Switch to Cluster Bomb attack type and Set payload positions on both username and password fields.
 
 
-![alt text](image-21.png)
+![alt text](screenshots/image-21.png)
 
 
 ## 5. Start attack.
 
 
-![alt text](image-22.png)
+![alt text](screenshots/image-22.png)
 
 
 
@@ -253,7 +253,7 @@ In this labwork,I used wireshark.
 ## 1. FTP
 
 
-![alt text](image-23.png)
+![alt text](screenshots/image-23.png)
 
 **Result:**
 
@@ -263,7 +263,7 @@ In this labwork,I used wireshark.
 ## 2. TELNET
 
 
-![alt text](image-26.png)
+![alt text](screenshots/image-26.png)
 
 
 **Result:**
@@ -277,7 +277,7 @@ In this labwork,I used wireshark.
   medusa -h 192.168.111.128 -U userlist.txt -P mypass.txt -M ssh  
 ```
 
-![alt text](image-27.png)
+![alt text](screenshots/image-27.png)
 
 
 **Result:**
