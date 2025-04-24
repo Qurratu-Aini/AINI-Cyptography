@@ -95,7 +95,7 @@ Both commands failed. Possible causes:**
 `--ssl-mode=DISABLED` disables SSL negotiation but the server may still expect it. SSL isn't always supported by default, especially in test or misconfigured environments.
 
 
-**ESuccessful Access:**
+**Successful Access:**
 
  ```bash
 mysql -h 192.168.249.128 -u root --skip-ssl
@@ -108,11 +108,86 @@ mysql -h 192.168.249.128 -u root --skip-ssl
 
 ## ✅ Task 2 : Enumeration of Users and Authentication Weaknesses 👤 
 
-### **2.1 Database Enumeration:** 
+## **Database Enumeration:**
 
  ```bash
-mysql -h 192.168.249.128 -u root --skip-ssl
+USE mysql;
+```
+![alt text](image-6.png)
+
+**Switch to System DB:**
+
+Selects the mysql system database that stores user and permission info
+
+**List Available Tables:**
+
+
+ ```bash
+SHOW TABLES;
+```
+![alt text](image-7.png)
+
+Displays all tables in the currently selected database.
+
+**View User Table:**
+
+```bash
+SELECT User, Host, Password FROM mysql.user;
+```
+![alt text](image-8.png)
+
+
+This is a serious security vulnerability which is an example of broken authentication and poor cryptographic practice (i.e., no password hash stored).
+
+- Users with no password (blank field)
+- Users with easy-to-crack password hashes
+- Any duplicate or strange access rules
+
+### ❔Question: Is no password a cryptographic failure? ❔
+
+Yes it is and it skips cryptographic protection. A secure system always authenticates users using a cryptographic mechanism (like password hashing + salting).
+
+
+## ✅ Task 3: Password Hash Discovery and Hash Identification
+
+Now that we know MySQL don't have anypassword, let's find a Databasewhich has one, in this case **`DVWA`** or `Damn Vulnerable Web Application`
+
+## **Enter DVWA database**
+
+```sql
+USE dvwa
 ```
 
+Now that we're in the database, Lets start digging ⛏️
 
+## **Look for info from user** 
+
+```sql
+SHOW TABLES;
+```
+
+![alt text](image-9.png)
+
+
+```sql
+SELECT * FROM users LIMIT 5;
+```
+![alt text](image-10.png)
+
+
+**Explanation:**
+
+Retrieves the first 5 rows only. This avoids loading a large dataset into the terminal and speeds up inspection.
+
+
+---
+
+ ### **3.1 Identify the hash** 
+
+### Let's try with admin user !!
+
+![alt text](image-11.png)
+
+
+### Let's try to identidy what hash it is!!
 
