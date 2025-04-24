@@ -29,8 +29,15 @@
 ## ✅ Task 1: Service Enumeration and Initial Access 🔍
 
 
- ### **1.1 Updates the package index in Kali Linux** 
+ ### **1.1 Finding the Target IP and updates the package index in Kali Linux** 
 
+```bash
+nmap -Pn -p 3306 192.168.249.128
+```
+
+![alt text](image-4.png)
+
+Try to look the target port on metasploit2 open or not which is mysql
 
 
 ```bash
@@ -59,7 +66,7 @@ sudo systemctl enable mariadb
 
 ---- 
 
- ### **1.2 Verify Setup** 
+ ### **1.3 Verify Setup** 
 
  ```bash
 dpkg -L mariadb-server | grep mysql_secure_installation
@@ -76,4 +83,36 @@ This checks the installation path for mysql_secure_installation, which helps har
 mysql -h 192.168.249.128 -u root --ssl-mode=DISABLED
 mysql -h 192.168.249.128 -u root -p --ssl-mode=DISABLED
 ```
+
+**Issue Encountered:
+Both commands failed. Possible causes:**
+
+- The server requires a password.
+- SSL/TLS is misconfigured or unsupported.
+
+**Explanation:**
+
+`--ssl-mode=DISABLED` disables SSL negotiation but the server may still expect it. SSL isn't always supported by default, especially in test or misconfigured environments.
+
+
+**ESuccessful Access:**
+
+ ```bash
+mysql -h 192.168.249.128 -u root --skip-ssl
+```
+
+--skip-ssl bypasses encryption entirely, sending data (including passwords) in plaintext, posing a significant security risk.
+
+---
+
+
+## ✅ Task 2 : Enumeration of Users and Authentication Weaknesses 👤 
+
+### **2.1 Database Enumeration:** 
+
+ ```bash
+mysql -h 192.168.249.128 -u root --skip-ssl
+```
+
+
 
