@@ -1,13 +1,13 @@
 # LABWORK-2 
  
-# Cryptographic Attacks: Cracking Weak Password Hashes and Exploiting Poor Authentication in Databases
+# Cryptographic Attacks: Cracking Weak Password Hashes and Exploiting Poor Authentication in Databases 	🔐
 
 ![alt text](image-16.png)
 
 <br/>
 
 ---
-### 📌 Objectives
+### 🎯 Objectives
 
 - Identify and exploit cryptographic weaknesses in database authentication and password storage.
 
@@ -17,7 +17,7 @@
 
 ---
 
-### ⚙️ Tools Used
+### 🛠️ Tools Used
 
 - Kali Linux (Attacker Machine)
 
@@ -31,10 +31,10 @@
 
 ---
 
-## ✅ Task 1: Service Enumeration and Initial Access 🔍
+## 📌 Task 1: Service Enumeration and Initial Access 
 
 
- ### **1.1 Finding the Target IP and updates the package index in Kali Linux** 
+ ### **1.1 Finding the Target IP and updates the package index in Kali Linux 🔍** 
 
 ```bash
 nmap -Pn -p 3306 192.168.249.128
@@ -51,11 +51,11 @@ sudo apt update
 
 ![alt text](image.png)
 
-**Explanation:**
+**📋Explanation :**
 
 This command updates the package index in Kali Linux. It ensures your system has the latest information about available software and dependencies before installing anything new, which helps avoid broken or outdated packages.
 
- ### **Other Setup Commands**
+ ### **Other Setup Commands 🧪**
 
  
 ```bash
@@ -71,7 +71,7 @@ sudo systemctl enable mariadb
 
 ---
 
- ### **1.3 Verify Setup** 
+ ### **1.2 Verify Setup ✅** 
 
  ```bash
 dpkg -L mariadb-server | grep mysql_secure_installation
@@ -111,7 +111,7 @@ mysql -h 192.168.249.128 -u root --skip-ssl
 ---
 
 
-## ✅ Task 2 : Enumeration of Users and Authentication Weaknesses 👤 
+## 📌 Task 2 : Enumeration of Users and Authentication Weaknesses 👤 
 
 ## **Database Enumeration:**
 
@@ -148,15 +148,15 @@ This is a serious security vulnerability which is an example of broken authentic
 - Users with easy-to-crack password hashes
 - Any duplicate or strange access rules
 
-### ❔Question: Is no password a cryptographic failure? ❔
+### ❔🧐 Question: Is no password a cryptographic failure? 🧐❔
 
 Yes it is and it skips cryptographic protection. A secure system always authenticates users using a cryptographic mechanism (like password hashing + salting).
 
 ---
 
-## ✅ Task 3: Password Hash Discovery and Hash Identification
+## 📌 Task 3: Password Hash Discovery and Hash Identification
 
-Now that we know MySQL don't have anypassword, let's find a Databasewhich has one, in this case **`DVWA`** or `Damn Vulnerable Web Application`
+Now that we know MySQL don't have anypassword, let's find a Databasewhich has one, in this case **`DVWA`** or **`Damn Vulnerable Web Application`**
 
 ## **Enter DVWA database**
 
@@ -181,14 +181,14 @@ SELECT * FROM users LIMIT 5;
 ![alt text](image-10.png)
 
 
-**Explanation:**
+**📋Explanation:**
 
 Retrieves the first 5 rows only. This avoids loading a large dataset into the terminal and speeds up inspection.
 
 
 ---
 
- ### **3.1 Identify the hash** 
+ ### **3.1 Identify the hash ✅** 
 
 ### Let's try with admin user !!
 
@@ -210,10 +210,10 @@ As we can see the hash is :
 - The length is 32 hex characters (128 bits)
 - The digits are 0-9 and hexadecimal ( lower letters a-f only )
 
-### and both of them matgch the MD5 characteristic
+### and both of them match the MD5 characteristic ✅
 
 
-### Now we use another command to mske sure it really is MD5
+### Now we use another command to mske sure it really is MD5 🧊 
 
 
 ```
@@ -225,9 +225,9 @@ hash-identifier  f6fdffe48c908deb0f4c3bd36c032e72
  The results shows that the most possible hash used was either MD5 or MD4
 
  ---
- ### **Additional Information** 
+ ### **Additional Information 🔥** 
 
-### Comparison between different types of hashes
+### Comparison between different types of hashes 🧐
 
 | **Characteristic**                          | **Hash Type (Guess)**                   |
 |--------------------------------------------|-----------------------------------------|
@@ -238,12 +238,12 @@ hash-identifier  f6fdffe48c908deb0f4c3bd36c032e72
 
 ---
 
-## ✅ Task 4: Offline Hash Cracking 
+## 📌 Task 4: Offline Hash Cracking 
 
 
 ### First of all.make a file (hash.txt) that consist the hash
 
- ### **4.1 Use John the Ripper to cracck the hash** 
+ ### **4.1 Use John the Ripper to cracck the hash 🔐** 
 
  ```
 john --format=raw-md5 --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt
@@ -251,13 +251,13 @@ john --format=raw-md5 --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt
 
 ![alt text](image-14.png)
 
-**Explanation:**
+**📋Explanation:**
 
 - Raw MD5 means that the hash is an unsalted MD5 hash, where the password is directly hashed without any additional data (like a salt).
 
 - If your hash is salted (MD5 with a salt), you would use a different format (e.g., --format=md5crypt for MD5 with salt).= 
 
-### Cracked hash a.k.a the password : adminadmin
+### ✅ Cracked hash a.k.a the password : adminadmin
 
  ### **If you would like to view the cracked hash :** 
 
@@ -271,10 +271,10 @@ All the cracked hashes are stores in john.pot
 
 ---
 
-## ✅ Task 5: Cryptographic Analysis and Mitigation 
+## 📌 Task 5: Cryptographic Analysis and Mitigation 
 
 
- ### **Issues found :** 
+ ### **❌ Issues found :** 
 
 - Login forms using HTTP (not encrypted)
 - Passwords stored with weak hashes (MD5/SHA1)
@@ -282,11 +282,13 @@ All the cracked hashes are stores in john.pot
 - Cookies may not be marked as secure
 
 
- ### **Solutions :** 
+ ### **💡Solutions :** 
  - Use HTTPS (SSL/TLS) for all login forms
 - Store passwords with bcrypt or Argon2
 - Apply salts to all password hashes
 - Enable Secure & HttpOnly flags on cookies
 
 
+## 🔍 Summary 
 
+This lab highlights the risks of using weak passwords and insecure hash functions such as unsalted MD5. It demonstrates how easily password hashes can be cracked using tools like John the Ripper. The exercise emphasizes the importance of implementing secure hashing algorithms (e.g., bcrypt, Argon2), enabling HTTPS to prevent plaintext credential transmission, and securing cookies with **`Secure`** and **`HttpOnly`** flags to protect against session hijacking and other web attacks.
