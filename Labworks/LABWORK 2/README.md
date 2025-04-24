@@ -147,6 +147,7 @@ This is a serious security vulnerability which is an example of broken authentic
 
 Yes it is and it skips cryptographic protection. A secure system always authenticates users using a cryptographic mechanism (like password hashing + salting).
 
+---
 
 ## ✅ Task 3: Password Hash Discovery and Hash Identification
 
