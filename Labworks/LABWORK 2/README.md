@@ -231,7 +231,7 @@ hash-identifier  f6fdffe48c908deb0f4c3bd36c032e72
 | Starts with `$1$`, `$5$`, `$6$`            | → **Linux shadow hashes** (MD5, SHA-256, SHA-512) |
 | Uppercase 32-char hex, split by `:`        | → **LM/NTLM** (Windows hashes)          |
 
-
+---
 
 ## ✅ Task 4: Offline Hash Cracking 
 
