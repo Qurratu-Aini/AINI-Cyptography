@@ -27,7 +27,7 @@ nmap -sV <TARGET_IP>
 nmap -p- 192.168.111.128
 
 
-(![alt text](image-1.png))
+(![alt text](image-1.png)) 
 
 
 
@@ -150,7 +150,7 @@ For **🔐 SSH (Using Medusa)**:
   medusa -h 192.168.111.128 -U userlist.txt -P mypass.txt -M ssh  
 ```
 
-![alt text](image-18.png)
+![alt text](screenshots/image-18.png)
 
 
 
