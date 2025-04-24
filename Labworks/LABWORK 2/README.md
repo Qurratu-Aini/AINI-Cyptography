@@ -189,5 +189,96 @@ Retrieves the first 5 rows only. This avoids loading a large dataset into the te
 ![alt text](image-11.png)
 
 
-### Let's try to identidy what hash it is!!
+### Let's try to identidy what hash it is
+
+using :
+```
+hashid f6fdffe48c908deb0f4c3bd36c032e72  
+```
+![alt text](image-12.png)
+
+### There's some of possiblities of hash so we need to check its characteristics
+
+As we can see the hash is :
+
+- The length is 32 hex characters (128 bits)
+- The digits are 0-9 and hexadecimal ( lower letters a-f only )
+
+### and both of them matgch the MD5 characteristic
+
+
+### Now we use another command to mske sure it really is MD5
+
+
+```
+hash-identifier  f6fdffe48c908deb0f4c3bd36c032e72  
+```
+
+![alt text](image-13.png)
+
+ The results shows that the most possible hash used was either MD5 or MD4
+
+ ---
+ ### **Additional Information** 
+
+### Comparison between different types of hashes
+
+| **Characteristic**                          | **Hash Type (Guess)**                   |
+|--------------------------------------------|-----------------------------------------|
+| 32-character hex from an old PHP/MySQL app | → Probably **MD5**                      |
+| 40-character hex (starts with 94BDCE...)   | → **SHA-1** used in MySQL 4.1+          |
+| Starts with `$1$`, `$5$`, `$6$`            | → **Linux shadow hashes** (MD5, SHA-256, SHA-512) |
+| Uppercase 32-char hex, split by `:`        | → **LM/NTLM** (Windows hashes)          |
+
+
+
+## ✅ Task 4: Offline Hash Cracking 
+
+
+### First of all.make a file (hash.txt) that consist the hash
+
+ ### **4.1 Use John the Ripper to cracck the hash** 
+
+ ```
+john --format=raw-md5 --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt
+```
+
+![alt text](image-14.png)
+
+**Explanation:**
+
+- Raw MD5 means that the hash is an unsalted MD5 hash, where the password is directly hashed without any additional data (like a salt).
+
+- If your hash is salted (MD5 with a salt), you would use a different format (e.g., --format=md5crypt for MD5 with salt).= 
+
+### Cracked hash a.k.a the password : adminadmin
+
+ ### **If you would like to view the cracked hash :** 
+
+ ```
+cat ~/.john/john.pot
+```
+
+![alt text](image-15.png)
+
+All the cracked hashes are stores in john.pot
+
+## ✅ Task 5: Cryptographic Analysis and Mitigation 
+
+
+ ### **Issues found :** 
+
+- Login forms using HTTP (not encrypted)
+- Passwords stored with weak hashes (MD5/SHA1)
+- No salting applied to password hashes
+- Cookies may not be marked as secure
+
+
+ ### **Solutions :** 
+ - Use HTTPS (SSL/TLS) for all login forms
+- Store passwords with bcrypt or Argon2
+- Apply salts to all password hashes
+- Enable Secure & HttpOnly flags on cookies
+
+
 
