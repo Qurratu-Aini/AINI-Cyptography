@@ -264,6 +264,8 @@ cat ~/.john/john.pot
 
 All the cracked hashes are stores in john.pot
 
+---
+
 ## ✅ Task 5: Cryptographic Analysis and Mitigation 
 
 
