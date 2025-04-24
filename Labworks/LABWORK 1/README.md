@@ -27,7 +27,7 @@ nmap -sV <TARGET_IP>
 nmap -p- 192.168.111.128
 
 
-(![alt text](image-1.png)) 
+![alt text](screenshots/image-1.png)
 
 
 
