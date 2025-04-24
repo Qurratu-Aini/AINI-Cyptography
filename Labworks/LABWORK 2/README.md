@@ -288,6 +288,7 @@ All the cracked hashes are stores in john.pot
 - Apply salts to all password hashes
 - Enable Secure & HttpOnly flags on cookies
 
+---
 
 ## 🔍 Summary 
 
