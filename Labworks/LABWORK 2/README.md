@@ -64,7 +64,7 @@ sudo systemctl enable mariadb
 
 ![alt text](image-3.png)
 
----- 
+---
 
  ### **1.3 Verify Setup** 
 
