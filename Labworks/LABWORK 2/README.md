@@ -117,7 +117,7 @@ mysql -h 192.168.249.128 -u root --skip-ssl
 Here we can see databses that available in MySQL
 
  ```bash
-USE mysql;
+USE mysql
 ```
 
 ![alt text](image-6.png)
