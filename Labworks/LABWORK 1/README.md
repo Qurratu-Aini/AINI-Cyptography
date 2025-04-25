@@ -1,5 +1,5 @@
 # LABWORK-1
-# 🧪 Lab Tasks
+# Network Brute Force and Sniffing Walkthrough  🔎⚠️ 
 
 ## ✅ Task 1: Enumerate the Vulnerable VM to Discover Usernames
 
