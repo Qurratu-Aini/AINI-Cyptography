@@ -217,7 +217,7 @@ As we can see the hash is :
 ### and both of them match the MD5 characteristic ✅
 
 
-### Now we use another command to mske sure it really is MD5 🧊 
+### Now we use another command to make sure it really is MD5 🧊 
 
 
 ```
@@ -247,13 +247,13 @@ hash-identifier  f6fdffe48c908deb0f4c3bd36c032e72
 
 ### First of all.make a file (hash.txt) that consist the hash
 
- ### **4.1 Use John the Ripper to cracck the hash 🔐** 
+ ### **4.1 Use John the Ripper to crack the hash 🔐** 
 
  ```
 john --format=raw-md5 --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt
 ```
 
-![alt text](image-14.png)
+![alt text](image-18.png)
 
 **📋Explanation:**
 
@@ -261,7 +261,7 @@ john --format=raw-md5 --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt
 
 - If your hash is salted (MD5 with a salt), you would use a different format (e.g., --format=md5crypt for MD5 with salt).= 
 
-### ✅ Cracked hash a.k.a the password : adminadmin
+### ✅ Cracked hash a.k.a the password : password
 
  ### **If you would like to view the cracked hash :** 
 
