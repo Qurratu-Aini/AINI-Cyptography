@@ -150,7 +150,7 @@ This is a serious security vulnerability which is an example of broken authentic
 - Users with easy-to-crack password hashes
 - Any duplicate or strange access rules
 
-### ❔🧐 Question: Is no password a cryptographic failure? 🧐❔
+### ❓ Question: Is no password a cryptographic failure? ❓
 
 Yes it is and it skips cryptographic protection. A secure system always authenticates users using a cryptographic mechanism (like password hashing + salting).
 
