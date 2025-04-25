@@ -139,7 +139,7 @@ Displays all tables in the currently selected database.
 **View User Table:**
 
 ```bash
-SELECT User, Host, Password FROM mysql.user;
+SELECT User, Host, Password FROM user;
 ```
 ![alt text](image-8.png)
 
