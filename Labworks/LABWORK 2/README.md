@@ -199,7 +199,7 @@ Retrieves the first 5 rows only. This avoids loading a large dataset into the te
 ![alt text](image-11.png)
 
 
-### Let's try to identidy what hash it is
+### Let's try to identify what hash it is
 
 using :
 ```
