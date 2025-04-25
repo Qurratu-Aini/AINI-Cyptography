@@ -22,8 +22,6 @@
 
 - MariaDB/MySQL (Target Database)
 
-- Wireshark (Packet Sniffing)
-
 - John the Ripper (Hash Cracking)
 
 - hashid / hash-identifier (Hash Detection)
