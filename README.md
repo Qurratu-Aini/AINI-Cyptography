@@ -26,3 +26,7 @@ Labworks/
 │   └── screenshots/
     
 ```
+<br>
+
+👩‍💻 Owned by Qurratu'Aini  
+🌐 [GitHub Profile](https://github.com/Qurratu-Aini)
