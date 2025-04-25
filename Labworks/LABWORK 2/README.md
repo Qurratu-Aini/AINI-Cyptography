@@ -158,7 +158,7 @@ Yes it is and it skips cryptographic protection. A secure system always authenti
 
 ## 📌 Task 3: Password Hash Discovery and Hash Identification
 
-Now that we know MySQL don't have anypassword, let's find a Databasewhich has one, in this case **`DVWA`** or **`Damn Vulnerable Web Application`**
+Now that we know MySQL don't have anypassword, let's find a Database which has one, in this case **`DVWA`** or **`Damn Vulnerable Web Application`**
 
 ## **Enter DVWA database**
 
