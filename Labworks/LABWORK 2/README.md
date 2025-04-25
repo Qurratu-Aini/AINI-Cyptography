@@ -2,7 +2,8 @@
  
 # Cryptographic Attacks: Cracking Weak Password Hashes and Exploiting Poor Authentication in Databases 	🔐
 
-![alt text](image-16.png)
+![Banner](image-16.png) 
+
 
 <br/>
 
