@@ -2,10 +2,9 @@
  
 # Cryptographic Attacks: Cracking Weak Password Hashes and Exploiting Poor Authentication in Databases 	🔐
 
-![Banner](image-16.png) 
+![alt text](image-16.png)
 
 
-<br/>
 
 ---
 ### 🎯 Objectives
