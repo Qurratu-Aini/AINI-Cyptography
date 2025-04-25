@@ -114,9 +114,14 @@ mysql -h 192.168.249.128 -u root --skip-ssl
 
 ## **Database Enumeration:**
 
+![alt text](image-17.png)
+
+Here we can see databses that available in MySQL
+
  ```bash
 USE mysql;
 ```
+
 ![alt text](image-6.png)
 
 **Switch to System DB:**
