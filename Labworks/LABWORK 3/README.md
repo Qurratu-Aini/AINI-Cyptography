@@ -53,14 +53,36 @@ openssl enc -aes-256-cbc -in aini.txt -out aini.enc -K $(xxd -p key.bin) -iv $(x
  "aes-256-cbc" "d3b4"
 usually happens because $(xxd -p key.bin) or $(xxd -p iv.bin) is producing line breaks or spaces, which messes up the -K or -iv option.
 
-✅ Fix: Convert binary to hex without newline
+### **✅ Fix: Convert binary to hex without newline** ###
+
 Try using xxd -p -c 256 to ensure it's all on one line:
 
+
+```bash
 KEY=$(xxd -p -c 256 key.bin)
+```
 
+```bash
 IV=$(xxd -p -c 256 iv.bin)
+```
 
+✅ The -c 256 option ensures that the entire hex string is on one line. This prevents formatting errors when passing to OpenSSL.
+
+### **1.5 Encrypt the message using AES-256-CBC:**
+
+```bash
+openssl enc -aes-256-cbc -in aini.txt -out aini.enc -K $KEY -iv $IV
+```
+✅ This encrypts the content of aini.txt using the specified key and IV and saves the output to aini.enc.
+
+
+### **🔒 Decryption**
+
+```bash
 openssl enc -aes-256-cbc -in aini.txt -out aini.enc -K $KEY -iv $IV  
+```
+✅ This decrypts the file back into plaintext and saves it to decrypted_aini.txt.
+
 
 
 🔍 Check values if needed:
