@@ -73,7 +73,7 @@ Note:
 
 ![alt text](image-2.png)
 
-### Step 4 : Decrypt the Message on Qutu
+### Step 4 : Decrypt the Message on Aini
 
 ```bash 
 openssl enc -d -aes-256-cbc -in akmal.enc -out decrypted.txt -K $(cat key.bin) -iv $(cat iv.bin)
