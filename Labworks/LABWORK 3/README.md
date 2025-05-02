@@ -150,13 +150,67 @@ openssl pkeyutl -encrypt -pubin -inkey public_key.pem -in ../rahsia.txt -out ../
 
 ![alt text](image-13.png)
 
+✅ This encrypts the plaintext using the public key. Only the private key can decrypt this.
+
+ **Decrypt the message using the private key**
+
+ On Aini’s machine:
+
+1.Receive the file rahsia.enc from Akmal.
+
+2.Decrypt it using your private key:
+
+```bash
+openssl pkeyutl -decrypt  -inkey private_key.pem -in rahsia.enc -out rahsia_decrypted.txt
+```
+![alt text](image-14.png)
+
+**View the decrypted message**
+
+```bash
+cat decrypted.txt
+```
+![alt text](image-15.png)
+
+**📄 Output:**
+
+Harini nk makan apa ek ?
+
+**Compare the decrypted content with the original message from rahsia.txt**
+
+```bash
+diff rahsia.txt decrypted.txt
+```
+![alt text](image-16.png)
+If there's no output, the files are identical ✅
 
 
+##  📌 Task 3: Hashing and Message Integrity using SHA-256
 
+**Create a file to hash**
 
+```bash
+echo "aku pilih madu…. sila sambung" > akmal.txt
+```
 
+**Generate SHA-256 hash**
 
+```bash
+openssl dgst -sha256 akmal.txt
+```
+![alt text](image-17.png)
 
+**📄 Output:**
+SHA2-256(akmal.txt)= 3650645a30afffd40020afcc6c699081ea11bf2a08199f7ee745b3178d0c457d
+
+**You can also try:**
+
+```bash
+sha256sum akmal.txt
+```
+![alt text](image-18.png)
+
+✅ Both tools give the same hash but differ in formatting. openssl prefixes with SHA256(filename)=, while sha256sum shows the hash followed by the filename.
 
 
 
