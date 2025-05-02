@@ -156,7 +156,7 @@ openssl pkeyutl -encrypt -pubin -inkey public_key.pem -in ../rahsia.txt -out ../
 
  On Aini’s machine:
 
-1.Receive the file rahsia.enc from Akmal.
+1.Receive the file rahsia.txt from Akmal.
 
 2.Decrypt it using your private key:
 
@@ -187,13 +187,13 @@ If there's no output, the files are identical ✅
 
 ##  📌 Task 3: Hashing and Message Integrity using SHA-256
 
-**Create a file to hash**
+**3.1 Create a file to hash**
 
 ```bash
 echo "aku pilih madu…. sila sambung" > akmal.txt
 ```
 
-**Generate SHA-256 hash**
+**3.2 Generate SHA-256 hash**
 
 ```bash
 openssl dgst -sha256 akmal.txt
@@ -212,77 +212,106 @@ sha256sum akmal.txt
 
 ✅ Both tools give the same hash but differ in formatting. openssl prefixes with SHA256(filename)=, while sha256sum shows the hash followed by the filename.
 
+**3.3 Modify the File**
+
+```bash
+nano akmal.txt
+```
+![alt text](image-19.png)
+
+
+**3.4  Generate Hash of the Modified File**
+
+![alt text](image-20.png)
+
+This just to show that even one character changed,the whole hash also will change
 
 
 
+##  📌 Task 4 : Digital Signatures using RSA
+
+**4.1 Generate RSA Keys for Akmal**
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-TASK 4
-Task 4: Digital Signatures using RSA (from scratch)
-🎯 Scenario:
-Labu wants to sign a document (agreement.txt) to prove to Labi that the message is authentic and hasn’t been tampered with.
-
-🧪 Step-by-Step Lab Instructions
-✅ Step 1: Generate RSA Keys for Labu
-Generate a 2048-bit RSA private key (Labu keeps this secret):
-
+```bash
 openssl genpkey -algorithm RSA -out labu_private.pem -pkeyopt rsa_keygen_bits:2048
+```
+![alt text](image-21.png)
 
-Extract the corresponding public key (to share with Labi)
-openssl rsa -pubout -in akmal_private.pem -out akmal_public.pem  
-
-
-✅ Step 2: Create the document to sign
-Labu creates the document:
-echo "This is the agreement between Labu and Labi." > agreement.txt
+Generate a 2048-bit RSA private key (Akmal keeps this secret)
 
 
-✅ Step 3: Sign the document using Labu’s private key
-Generate a SHA-256 digital signature:
+**4.2 Extract the corresponding public key (to share with Aini)**
+
+```bash
+openssl rsa -pubout -in akmal_private.pem -out akmal_public.pem
+```
+![alt text](image-22.png)
+
+**4.2 Create the document to sign**
+
+Akmal creates the document:
+
+```bash
+echo "This is very important Senahhhhh." > agreement.txt
+```
+
+![alt text](image-23.png)
+
+
+**4.2  Sign the document using Akmal’s private key**
+
+Generate a SHA-256 digital signature
+
+```bash
 cd /home/akmal/Downloads
+```
+
+```bash
 openssl dgst -sha256 -sign akmal_private.pem -out signature.bin ../agreement.txt
+```
 
-This creates signature.bin, the signed hash of the document.
+![alt text](image-24.png)
 
 
-✅ Step 4: Verify the signature using Labu’s public key
-Labi receives agreement.txt, signature.bin, and labu_public.pem, then verifies:
+**4.3 Verify the signature using Labu’s public key**
 
+Labi receives agreement.txt, signature.bin, and labu_public.pem, then verifies
+
+```bash
 openssl dgst -sha256 -verify labu_public.pem -signature signature.bin agreement.txt
-If the file is unaltered, you’ll see:
-Verified OK
+```
 
-✅ Step 5: Simulate tampering and verify again
+If the file is unaltered, you’ll see:
+
+**Verified OK**
+
+**4.4 Simulate tampering and verify again**
+
 Modify the document:
 
+```bash
 echo "This clause is added without consent." >> agreement.txt
+```
+
 Now verify again:
 
+```bash
 openssl dgst -sha256 -verify labu_public.pem -signature signature.bin agreement.txt
-You’ll see:
-Verification Failure
+```
 
-🧠 Explanation: Why does verification fail?
+You’ll see:
+
+**Verification Failure**
+
+**🧠 Explanation:Why does verification fail?**
+
 The signature is based on a hash of the original file content. When even one character is changed:
-The hash changes
-The signature no longer matches the new hash
+- The hash changes
+- The signature no longer matches the new hash
+
 So OpenSSL fails the verification to protect against tampering or forgery.
+
+
+
+
