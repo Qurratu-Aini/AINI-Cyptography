@@ -1,11 +1,39 @@
 
-## Task 1
+# LABWORK-3
+ 
+# Hands-on Exploration of Cryptographic Tools: Hashing, Encryption, and Digital Signatures 🔐
 
+
+---
+### 🎯 Objectives
+
+---
+
+### 🛠️ Tools Used
+
+- Kali Linux 
+
+- openssl
+
+## 📌 Task 1: Symmetric Encryption and Decryption using AES-256-CBC
+
+
+ ### **1.1 Generate a 256-bit (32-byte) random key:** 
+
+```bash
 openssl rand -out key.bin 32
+```
 
+
+```bash
 openssl rand -out iv.bin 16
+```
 
+```bash
 echo "You did great mal :)" > aini.txt
+```
+
+
 
 
 openssl enc -aes-256-cbc -in aini.txt -out aini.enc -K $(xxd -p key.bin) -iv $(xxd -p iv.bin)
