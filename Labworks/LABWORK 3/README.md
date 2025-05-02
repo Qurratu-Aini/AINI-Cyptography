@@ -6,7 +6,11 @@
 
 ---
 ### 🎯 Objectives
+- Encrypt and decrypt files using symmetric and asymmetric encryption
 
+- Generate and verify hashes
+
+- Create and verify digital signatures.
 ---
 
 ### 🛠️ Tools Used
