@@ -21,96 +21,77 @@
 
 ## 📌 Task 1: Symmetric Encryption and Decryption using AES-256-CBC
 
+We will use OpenSSL to encrypt and decrypt the message
 
- ### **1.1 Generate a 256-bit (32-byte) random key:** 
+### Step 1 :
+Generate strong Random key (on Sender /Akmal)
 
-```bash
-openssl rand -out key.bin 32
+```bash 
+openssl rand -hex 32 > key.bin``` </pre>
+This command to generate 256-bit (32bytes) key
 ```
-✅ This creates a secure random binary file (key.bin) of 32 bytes, suitable for AES-256.
-
-### **1.2 Generate a 128-bit (16-byte) random IV:** 
-
-```bash
-openssl rand -out iv.bin 16
-```
-✅ The IV (Initialization Vector) is required for CBC mode encryption to ensure
-
-### **1.3 Create a plaintext message file:**
-
-```bash
-echo "You did great mal :)" > aini.txt
-```
-✅ This writes your test message to aini.txt, which will be encrypted.
-
-
-### **🔒 Encryption**
-
-### **1.4 Convert binary key and IV to hex format without line breaks:**
-
-```bash
-openssl enc -aes-256-cbc -in aini.txt -out aini.enc -K $(xxd -p key.bin) -iv $(xxd -p iv.bin)
+```bash 
+openssl rand -hex 16 > iv.bin``` </pre>
+Generate a 128-bit (16 bytes) IV (Initialization Vector)
 ```
 
 ![alt text](image.png)
 
- "aes-256-cbc" "d3b4"
-usually happens because $(xxd -p key.bin) or $(xxd -p iv.bin) is producing line breaks or spaces, which messes up the -K or -iv option.
+ IV is a unique value
 
-### **✅ Fix: Convert binary to hex without newline** ###
+ Why IV is important:
 
-Try using xxd -p -c 256 to ensure it's all on one line:
+-Prevents pattern detection in encrypted data.
 
+-Used in block cipher modes like CBC, CTR, GCM, etc.
 
-```bash
-KEY=$(xxd -p -c 256 key.bin)
+Must be:
+
+-Random or unique (for CBC)
+
+-Nonce (number used once) for CTR/GCM
+
+- Usually not secret, but must be unpredictable
+
+### Step 2 : Create message
+
+```bash 
+Aku pilih madu.... sila sambung " > Akmal.txt
 ```
 
-```bash
-IV=$(xxd -p -c 256 iv.bin)
-```
-
-✅ The -c 256 option ensures that the entire hex string is on one line. This prevents formatting errors when passing to OpenSSL.
-
-
-### **🔍 Check values if needed:** ###
-
-```bash
-echo $KEY  
-```
 ![alt text](image-1.png)
 
-```bash
-echo $IV  
+### Step 3 : Encrypt the Message with AES-256-CBC 
+
+```bash 
+openssl enc -aes-256-cbc -in akmal.txt -out akmal.enc -K $(cat key.bin) -iv $(cat iv.bin)```</pre>
 ```
+
+Note:
+•	-K requires a hex-encoded 256-bit key (64 hex chars).
+•	-iv requires a hex-encoded 128-bit IV (32 hex chars).
+
 ![alt text](image-2.png)
 
-This will ensure the key and IV are correctly passed to the openssl enc command.
+### Step 4 : Decrypt the Message on Qutu
 
-
-### **1.5 Encrypt the message using AES-256-CBC:**
-
-```bash
-openssl enc -aes-256-cbc -in aini.txt -out aini.enc -K $KEY -iv $IV
-```
-✅ This encrypts the content of aini.txt using the specified key and IV and saves the output to aini.enc.
-
-
-### **🔒 Decryption**
-
-```bash
-openssl enc -d -aes-256-cbc -in aini.enc -out decrypted_aini.txt -K $KEY -iv $IV 
-```
-
-### ** 1.6 Display the decrypted content:** ###
-
-```bash
-cat decrypted_aini.txt 
+```bash 
+openssl enc -d -aes-256-cbc -in akmal.enc -out decrypted.txt -K $(cat key.bin) -iv $(cat iv.bin)
 ```
 
 ![alt text](image-3.png)
 
-You did great mal :)
+Check the decrypted message:
+
+•	Open the decrypted.txt file to verify the message:
+
+```bash 
+cat decrypted.txt
+```
+
+It should contain the original message sent by Akmal.
+
+![alt text](image-4.png)
 
 
 
@@ -146,7 +127,7 @@ echo "This is an RSA test message." > rsa_message.txt
 ```
 ![alt text](image-12.png)
 
-**Encrypt the message using the Aini's public key**
+**Encrypt the message using the Aini's private key**
 
 ```bash
 openssl pkeyutl -encrypt -pubin -inkey public_key.pem -in ../rahsia.txt -out ../rahsia.enc
@@ -162,7 +143,7 @@ openssl pkeyutl -encrypt -pubin -inkey public_key.pem -in ../rahsia.txt -out ../
 
 1.Receive the file rahsia.txt from Akmal.
 
-2.Decrypt it using your private key:
+2.Decrypt it using your public key:
 
 ```bash
 openssl pkeyutl -decrypt  -inkey private_key.pem -in rahsia.enc -out rahsia_decrypted.txt
