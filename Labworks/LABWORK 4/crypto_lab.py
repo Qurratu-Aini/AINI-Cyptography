@@ -1,5 +1,3 @@
-## task 1
-
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad, unpad
@@ -22,9 +20,5 @@ message = "Cryptography Lab by NUR QURRATU'AINI BALQIS,NWS23010039!"
 iv, ciphertext = aes_encrypt(message, key)
 print("Encrypted:", ciphertext.hex())
 
-Encrypted: 43cd2e731e300b9500f34d8de043c227f43cac9405ab207878daf53375106f5f4c116726ce684d98a32f634986630f995ee8ab57ace06ce1e689a6195507069f
-Decrypted: Cryptography Lab by NUR QURRATU'AINI BALQIS,NWS23010039!
-
-## Task 2
-
-
+plaintext = aes_decrypt(iv, ciphertext, key)
+print("Decrypted:", plaintext)
