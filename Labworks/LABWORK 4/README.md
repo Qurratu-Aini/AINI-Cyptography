@@ -1,76 +1,156 @@
-## task 1
+### TASK 1 (AES 256 CBC)
+
+## ENCRYPT (AINI)
 
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
-from Crypto.Util.Padding import pad, unpad
+import base64
 
-- AES: Provides the AES encryption/decryption functions.
+#Helper: Padding function (PKCS7-style)
+def pad(data):
+    pad_len = 16 - len(data) % 16
+    return data + bytes([pad_len] * pad_len)
 
-- get_random_bytes: Generates cryptographically secure random bytes (for keys/IVs).
+#Your message
+message = b"NUR QURRATU'AINI BALQIS ,NWS23010039"
 
-- pad/unpad: Ensures data aligns with AES block size (16 bytes) by adding/removing padding.
+#Generate a 256-bit (32-byte) key and a 16-byte IV
+key = get_random_bytes(32)  # AES-256
+iv = get_random_bytes(16)   # IV must be 16 bytes
 
+#Create cipher object with AES-256 in CBC mode
+cipher = AES.new(key, AES.MODE_CBC, iv)
 
-def aes_encrypt(message, key):
-    cipher = AES.new(key, AES.MODE_CBC)
-    ct_bytes = cipher.encrypt(pad(message.encode(), AES.block_size))
-    iv = cipher.iv
-    return iv, ct_bytes
+#Encrypt the padded message
+ciphertext = cipher.encrypt(pad(message))
 
-- AES.new(key, AES.MODE_CBC)
+#Encode values to base64 for safe transfer
+b64_cipher = base64.b64encode(ciphertext).decode()
+b64_key = base64.b64encode(key).decode()
+b64_iv = base64.b64encode(iv).decode()
 
-Creates an AES cipher object with:
+#Print to send to your friend
+print("🔐 Encrypted (Base64):", b64_cipher)
+print("🔑 Key (Base64):", b64_key)
+print("🧊 IV (Base64):", b64_iv)
 
-key: 16/24/32-byte secret key (128/192/256-bit).
+![alt text](image.png)
 
-MODE_CBC: Cipher Block Chaining mode (requires IV for security).
-
-- pad(message.encode(), AES.block_size)
-
-Encodes the message to bytes (e.g., "Hello" → b'Hello').
-
-Pads the bytes to a multiple of 16 bytes (AES block size).
-Example: If the message is 10 bytes, 6 bytes of padding are added.
-
-- cipher.encrypt()
-Encrypts the padded message using AES-CBC.
-
-- cipher.iv
-The IV (random 16-byte value) is generated automatically. It ensures identical messages encrypt differently.
-
-- Returns (iv, ct_bytes)
-The IV and ciphertext are needed for decryption.
+ ## DECRYPT (AKMAL)
 
 
-def aes_decrypt(iv, ct_bytes, key):
-    cipher = AES.new(key, AES.MODE_CBC, iv=iv)
-    pt = unpad(cipher.decrypt(ct_bytes), AES.block_size)
-    return pt.decode()
+from Crypto.Cipher import AES
+import base64
 
-# Example usage
-key = get_random_bytes(16)  # 128-bit key
-message = "Cryptography Lab by NUR QURRATU'AINI BALQIS,NWS23010039!"
+#Helper: Unpadding function
+def unpad(data):
+    return data[:-data[-1]]
 
-iv, ciphertext = aes_encrypt(message, key)
-print("Encrypted:", ciphertext.hex())
+#Paste received values here
+b64_cipher=" TYdaeBBnweN7pbcjeDYLK3bKXWOr9lzws3yCXR3AzBnMAvvyuzCKOW7UW1pvaIzQ"
+b64_key ="Bt3+a+1zqOz7L6JpkhoZlSf95qBUfR+7kn0/Bl7396c=="
+b64_iv = "fClKMFXdlHBYJb5y+HUyuA=="
 
-Encrypted: 43cd2e731e300b9500f34d8de043c227f43cac9405ab207878daf53375106f5f4c116726ce684d98a32f634986630f995ee8ab57ace06ce1e689a6195507069f
-Decrypted: Cryptography Lab by NUR QURRATU'AINI BALQIS,NWS23010039!
+#Decode from base64
+ciphertext = base64.b64decode(b64_cipher)
+key = base64.b64decode(b64_key)
+iv = base64.b64decode(b64_iv)
 
+#Decrypt
+cipher = AES.new(key, AES.MODE_CBC, iv)
+decrypted = unpad(cipher.decrypt(ciphertext))
 
-
-
-
-
-
-
-
-
-
+#Show result
+print("🔓 Decrypted message:", decrypted.decode())
 
 
+![alt text](image-1.png)
 
 
-## Task 2
+### TASK 2 (RSA)
+
+
+## ENDER (AINI)(GENERATE PUBLIC AND PRIVATE KEY)
+
+from Crypto.PublicKey import RSA
+from Crypto.Cipher import PKCS1_OAEP
+import base64
+
+#Generate RSA key pair (2048 bits)
+key = RSA.generate(2048)
+
+private_key = key.export_key()
+public_key = key.publickey().export_key()
+
+#Save keys to files
+with open("private.pem", "wb") as f:
+    f.write(private_key)
+
+with open("public.pem", "wb") as f:
+    f.write(public_key)
+
+#Message to encrypt
+message = b"Hello from Aini, CB123456 - Cryptography Lab!"
+
+#Encrypt message with public key
+recipient_key = RSA.import_key(open("public.pem").read())
+cipher_rsa = PKCS1_OAEP.new(recipient_key)
+ciphertext = cipher_rsa.encrypt(message)
+
+#Base64 encode ciphertext to send
+b64_cipher = base64.b64encode(ciphertext).decode()
+
+#Save to file or share via WhatsApp
+with open("encrypted_rsa.txt", "w") as f:
+    f.write(b64_cipher)
+
+print("✅ Encrypted message (Base64):", b64_cipher)
+
+
+## RECEIVER (AKMAL)
+
+from Crypto.PublicKey import RSA
+from Crypto.Cipher import PKCS1_OAEP
+import base64
+
+#Load private key
+private_key = RSA.import_key(open("private.pem").read())
+
+#Read encrypted message
+with open("encrypted_rsa.txt", "r") as f:
+    b64_cipher = f.read()
+
+#Decode from Base64
+ciphertext = base64.b64decode(b64_cipher)
+
+#Decrypt
+cipher_rsa = PKCS1_OAEP.new(private_key)
+message = cipher_rsa.decrypt(ciphertext)
+
+print("🔓 Decrypted message:", message.decode())
+
+
+### TASK 3
+
+## HASH
+
+import hashlib
+
+#File to hash (same directory)
+filename = "example.txt"
+
+#Read file in binary mode
+with open(filename, "rb") as f:
+    file_data = f.read()
+
+#Generate hash
+hash_object = hashlib.sha256(file_data)
+hex_dig = hash_object.hexdigest()
+
+print("📄 File:", filename)
+print("🔐 SHA-256 Hash:", hex_dig)
+
+
+## TASK 4 (DIGITAL SIGNATURE)
 
 
