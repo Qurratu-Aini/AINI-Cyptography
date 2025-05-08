@@ -101,8 +101,11 @@ decrypted = unpad(cipher.decrypt(ciphertext))
 
 #Show result
 print("🔓 Decrypted message:", decrypted.decode())
+
 ```
 
+
+![alt text](<WhatsApp Image 2025-05-08 at 18.05.31_4f20e8f7.jpg>)
 
 
 ## 🔐 Task 2: Asymmetric Encryption (RSA)
@@ -167,7 +170,9 @@ f.write(b64_cipher)
 print("✅ Encrypted message (Base64):", b64_cipher)
 
 ```
-
+![alt text](image-2.png)
+![alt text](image-3.png)
+![alt text](image-4.png)
 ### 3. Decryption Script (Using Private Key)
 
 - Aini will donwload the file of encrypted message (encrypted_rsa.txt) and try to decrypt the message using Aini's private key
