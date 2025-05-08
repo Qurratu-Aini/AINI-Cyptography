@@ -1,7 +1,45 @@
-### TASK 1 (AES 256 CBC)
+# LABWORK-2 
+ 
+# Lab 4: Implementing Cryptography with Python	🔐
 
-## ENCRYPT (AINI)
 
+
+
+## 📚 Overview
+
+This lab demonstrates fundamental cryptographic techniques using Python and the `pycryptodome` library. The lab includes:
+
+1. **Symmetric Encryption (AES)**
+2. **Asymmetric Encryption (RSA)**
+3. **Hashing (SHA-256)**
+4. **Digital Signatures (RSA)**
+
+> 💻 Developed using Python in VS Code  
+> 🧑‍🤝‍🧑 Collaborated between two students using encrypted file exchange via WhatsApp
+
+---
+
+## 📦 Requirements
+
+- Python 3.x
+- [pycryptodome](https://pypi.org/project/pycryptodome/)
+
+Install with:
+
+```bash
+pip install pycryptodome
+```
+---
+### 🔐 Task 1: Symmetric Encryption (AES)
+
+### 🎯 Objectives
+Encrypt and decrypt a message using AES (CBC mode with AES-256 key).
+ 
+ ---
+
+### ENCRYPT (AINI)
+ 
+```bash
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 import base64
@@ -33,12 +71,13 @@ b64_iv = base64.b64encode(iv).decode()
 print("🔐 Encrypted (Base64):", b64_cipher)
 print("🔑 Key (Base64):", b64_key)
 print("🧊 IV (Base64):", b64_iv)
-
+ ```
 ![alt text](image.png)
 
- ## DECRYPT (AKMAL)
+ ### DECRYPT (AKMAL)
 
-
+ 
+```bash
 from Crypto.Cipher import AES
 import base64
 
@@ -62,72 +101,110 @@ decrypted = unpad(cipher.decrypt(ciphertext))
 
 #Show result
 print("🔓 Decrypted message:", decrypted.decode())
-
+```
 
 ![alt text](image-1.png)
 
 
-### TASK 2 (RSA)
+## 🔐 Task 2: Asymmetric Encryption (RSA)
+
+### 🎯 Objectives
+Encrypt and decrypt messages using RSA keys.
 
 
-## ENDER (AINI)(GENERATE PUBLIC AND PRIVATE KEY)
+### 1. Key Generation Script
 
+# Generate RSA key pair (public and private key)
+
+
+```bash
+# rsa_keygen.py
+from Crypto.PublicKey import RSA
+
+# Generate a 2048-bit RSA key pair
+key = RSA.generate(2048)
+
+# Save private key
+with open("private.pem", "wb") as priv_file:
+    priv_file.write(key.export_key())
+
+# Save public key
+with open("public.pem", "wb") as pub_file:
+    pub_file.write(key.publickey().export_key())
+
+print("✅ RSA key pair generated and saved.")
+```
+- Then,Aini will send public key file (public,pem) to akmal.
+
+### 2. Encryption Script (Using Public Key)
+
+
+- Akmal will receive the file and download.Now Akmal has the file and try to encrypt message using Aini's public key
+
+```bash
+# rsa_encrypt.py
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP
 import base64
 
-#Generate RSA key pair (2048 bits)
-key = RSA.generate(2048)
+# Your plaintext message
+message = b"Hi Aini! This is Akmal - Encrypyed using your public key!"
 
-private_key = key.export_key()
-public_key = key.publickey().export_key()
+# Load public key
+with open("public.pem", "rb") as f:
+    public_key = RSA.import_key(f.read())
 
-#Save keys to files
-with open("private.pem", "wb") as f:
-    f.write(private_key)
-
-with open("public.pem", "wb") as f:
-    f.write(public_key)
-
-#Message to encrypt
-message = b"Hello from Aini, CB123456 - Cryptography Lab!"
-
-#Encrypt message with public key
-recipient_key = RSA.import_key(open("public.pem").read())
-cipher_rsa = PKCS1_OAEP.new(recipient_key)
+# Create cipher
+cipher_rsa = PKCS1_OAEP.new(public_key)
 ciphertext = cipher_rsa.encrypt(message)
 
-#Base64 encode ciphertext to send
+# Encode to base64 for easy sharing
 b64_cipher = base64.b64encode(ciphertext).decode()
 
-#Save to file or share via WhatsApp
-with open("encrypted_rsa.txt", "w") as f:
-    f.write(b64_cipher)
+# Save encrypted message to a file
+with open("encrypted_rsa.txt","w") as f :
+f.write(b64_cipher)
 
 print("✅ Encrypted message (Base64):", b64_cipher)
 
+```
 
-## RECEIVER (AKMAL)
+### 3. Decryption Script (Using Private Key)
 
+- Aini will donwload the file of encrypted message (encrypted_rsa.txt) and try to decrypt the message using Aini's private key
+
+```bash
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP
 import base64
 
-#Load private key
+# Load private key
 private_key = RSA.import_key(open("private.pem").read())
 
-#Read encrypted message
+# Read encrypted message
 with open("encrypted_rsa.txt", "r") as f:
     b64_cipher = f.read()
 
-#Decode from Base64
+# Decode from Base64
 ciphertext = base64.b64decode(b64_cipher)
 
-#Decrypt
+# Decrypt
 cipher_rsa = PKCS1_OAEP.new(private_key)
 message = cipher_rsa.decrypt(ciphertext)
 
 print("🔓 Decrypted message:", message.decode())
+```
+
+
+### 🔐 Task 3: Hashing (SHA-256)
+
+### 🎯 Objectives
+- Compute the SHA-256 hash of a string message.
+
+- Compute the SHA-256 hash of a file.
+
+- Capture screenshot outputs for different inputs.
+
 
 
 ### TASK 3
