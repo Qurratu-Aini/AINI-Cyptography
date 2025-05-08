@@ -1,7 +1,7 @@
 import hashlib
 
 # Input message
-message = "wt"
+message = "meow"
 
 # Encode and hash
 hash_object = hashlib.sha256(message.encode())
