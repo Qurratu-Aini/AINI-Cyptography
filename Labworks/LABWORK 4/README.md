@@ -267,7 +267,6 @@ print("✅ Message signed!")
 print("✉️ Signature (Base64):", b64_signature)
 
 ```
-![alt text](image-5.png)
 
 - Aini will sign  a message using RSA private key togetehr with signature.Then,Aini will send three files which are signed_message.txt , signature.txt and public,pem to Akmal.
 
@@ -304,6 +303,9 @@ except (ValueError, TypeError):
     print("❌ Signature is invalid.")
 
 ```
+
+![alt text](image-5.png)
+
 
 - Then,Akmal will download all three files and Read your original message from signed_message.txt.
 
