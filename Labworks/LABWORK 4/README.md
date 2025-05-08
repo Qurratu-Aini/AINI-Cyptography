@@ -228,7 +228,6 @@ print("🔐 SHA-256 Hash:", hex_dig)
 
 - Verify the signature using the corresponding public key.
 
-- Screenshot the output of signing and verifying.
 
 ```bash
 from Crypto.Signature import pkcs1_15

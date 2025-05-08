@@ -1,5 +1,3 @@
-
-
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 import base64
@@ -31,11 +29,3 @@ b64_iv = base64.b64encode(iv).decode()
 print("🔐 Encrypted (Base64):", b64_cipher)
 print("🔑 Key (Base64):", b64_key)
 print("🧊 IV (Base64):", b64_iv)
-
-
-
-
-
-
-
-
