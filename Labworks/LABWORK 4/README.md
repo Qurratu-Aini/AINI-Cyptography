@@ -316,3 +316,12 @@ except (ValueError, TypeError):
 
 - If they don't match: ❌ The message has been altered or the signature is invalid.
 
+
+
+## 📌 Summary:
+
+
+| Role       | Action           | Tool Used                   |
+| ---------- | ---------------- | --------------------------- |
+| **You**    | Sign message     | Private Key (`private.pem`) |
+| **Friend** | Verify signature | Public Key (`public.pem`)   |
