@@ -1,7 +1,7 @@
 import hashlib
 
 # Input message
-message = "we"
+message = "wt"
 
 # Encode and hash
 hash_object = hashlib.sha256(message.encode())
