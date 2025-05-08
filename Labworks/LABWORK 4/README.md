@@ -72,7 +72,7 @@ print("🔐 Encrypted (Base64):", b64_cipher)
 print("🔑 Key (Base64):", b64_key)
 print("🧊 IV (Base64):", b64_iv)
  ```
-![alt text](image.png)
+
 
  ### DECRYPT (AKMAL)
 
@@ -103,7 +103,6 @@ decrypted = unpad(cipher.decrypt(ciphertext))
 print("🔓 Decrypted message:", decrypted.decode())
 ```
 
-![alt text](image-1.png)
 
 
 ## 🔐 Task 2: Asymmetric Encryption (RSA)
