@@ -30,7 +30,7 @@ Install with:
 pip install pycryptodome
 ```
 ---
-### 🔐 Task 1: Symmetric Encryption (AES)
+## 🔐 Task 1: Symmetric Encryption (AES)
 
 ### 🎯 Objectives
 Encrypt and decrypt a message using AES (CBC mode with AES-256 key).
@@ -114,7 +114,7 @@ Encrypt and decrypt messages using RSA keys.
 
 ### 1. Key Generation Script
 
-# Generate RSA key pair (public and private key)
+### Generate RSA key pair (public and private key)
 
 
 ```bash
@@ -196,7 +196,7 @@ print("🔓 Decrypted message:", message.decode())
 ```
 
 
-### 🔐 Task 3: Hashing (SHA-256)
+## 🔐 Task 3: Hashing (SHA-256)
 
 ### 🎯 Objectives
 - Compute the SHA-256 hash of a string message.
@@ -205,12 +205,7 @@ print("🔓 Decrypted message:", message.decode())
 
 - Capture screenshot outputs for different inputs.
 
-
-
-### TASK 3
-
-## HASH
-
+```bash
 import hashlib
 
 #File to hash (same directory)
@@ -226,76 +221,98 @@ hex_dig = hash_object.hexdigest()
 
 print("📄 File:", filename)
 print("🔐 SHA-256 Hash:", hex_dig)
+ ```
 
+ 
+## 🔐 Task 4: Digital Signatures (RSA)
 
-## TASK 4 (DIGITAL SIGNATURE)
+ Objective:
 
-## Sign the Message (Using Private Key)(AINI)
+- Sign a message using an RSA private key.
 
+- Verify the signature using the corresponding public key.
+
+- Screenshot the output of signing and verifying.
+
+```bash
 from Crypto.Signature import pkcs1_15
 from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA
 import base64
 
-#Load private key (you've already generated it)
+# Load private key (i've already generated it)
 private_key = RSA.import_key(open("private.pem").read())
 
-#Message to sign
+# Message to sign
 message = b"Digital signature test from Aini, CB123456"
 
-#Hash the message first
+# Hash the message first
 hash_obj = SHA256.new(message)
 
-#Sign the hash with your private key
+# Sign the hash with your private key
 signature = pkcs1_15.new(private_key).sign(hash_obj)
 
-#Encode signature in base64 for transmission (optional)
+# Encode signature in base64 for transmission (optional)
 b64_signature = base64.b64encode(signature).decode()
 
-#Save signed message and signature
+# Save signed message and signature
 with open("signed_message.txt", "wb") as f:
     f.write(message)
 
 with open("signature.txt", "w") as f:
     f.write(b64_signature)
 
-#Output signature for debugging or to send
+# Output signature for debugging or to send
 print("✅ Message signed!")
 print("✉️ Signature (Base64):", b64_signature)
 
+```
 
-## Sign the Message (Using Private Key)(AKMAL)
+- Aini will sign  a message using RSA private key togetehr with signature.Then,Aini will send three files which are signed_message.txt , signature.txt and public,pem to Akmal.
 
 
+### Verify the Signature (Using Public Key)
+
+```bash
 from Crypto.Signature import pkcs1_15
 from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA
 import base64
 
-#Load private key (you've already generated it)
-private_key = RSA.import_key(open("private.pem").read())
+# Load the public key
+public_key = RSA.import_key(open("public.pem").read())
 
-#Message to sign
-message = b"Digital signature test from Aini, CB123456"
+# Read the signed message and the signature
+with open("signed_message.txt", "rb") as f:
+    message = f.read()
 
-#Hash the message first
+with open("signature.txt", "r") as f:
+    b64_signature = f.read()
+
+# Decode the signature from Base64
+signature = base64.b64decode(b64_signature)
+
+# Hash the message again
 hash_obj = SHA256.new(message)
 
-#Sign the hash with your private key
-signature = pkcs1_15.new(private_key).sign(hash_obj)
+# Verify the signature using the public key
+try:
+    pkcs1_15.new(public_key).verify(hash_obj, signature)
+    print("✅ Signature is valid.")
+except (ValueError, TypeError):
+    print("❌ Signature is invalid.")
 
-#Encode signature in base64 for transmission (optional)
-b64_signature = base64.b64encode(signature).decode()
+```
 
-#Save signed message and signature
-with open("signed_message.txt", "wb") as f:
-    f.write(message)
+- Then,Akmal will download all three files and Read your original message from signed_message.txt.
 
-with open("signature.txt", "w") as f:
-    f.write(b64_signature)
+- Hash the message using SHA-256.
 
-#Output signature for debugging or to send
-print("✅ Message signed!")
-print("✉️ Signature (Base64):", b64_signature)
+- Decrypt the signature using your public key (from public.pem).
 
+- Compare the decrypted hash with the one they just computed.
+
+- If they match: ✅ The message is authentic and hasn’t been tampered with.
+
+- If they don't match: ❌ The message has been altered or the signature is invalid.
 
