@@ -134,7 +134,153 @@ This file was encrypted by Nur Qurratu'Aini Balqis (nws23010039)
 
 ## Task 3: Sign and Verify a Message
 
+### Step 1: Create a Signed Message File
+
+First, create the message file signed_message.txt with the content:
+
+```bash
+echo "I, Nur Qurratu'Aini Balqis, declare this is my work." > signed_message.txt
+```
+
+### Step 2 : Sign the File Using GPG
+
+--clearsign: This method signs the message and allows it to remain readable by humans (it’s a signed version of the message).
+
+For this task, we’ll use --clearsign, which signs the message directly.
+
+```bash
+gpg --clearsign signed_message.txt
+```
+
+![alt text](image-11.png)
+
+### Step 3 : Verify Your Signature
+
+```bash
+gpg --verify signed_message.txt.asc
+```
+
+![alt text](image-12.png)
+
+ "Good signature from..." in the output, confirming that the signature is valid and the message is authentic.
+
+
+## Task 4: Configure Passwordless SSH Authentication
+
+### Step 1: Generate an SSH Key Pair with Your Name and ID as a Comment
+
+First,I'll generate an SSH key pair with my name and student ID as the comment.
+
+
+```bash
+ssh-keygen -C "Nur Qurratu'Aini Balqis-nws23010039"
+```
+Enter a passphrase or leave it empty (for passwordless login, it's common to leave it empty).
+
+![alt text](image-13.png)
+![alt text](image-14.png)
+
+
+This will generate two files:
+
+- id_rsa: The private key (keep this secure and don’t share it).
+
+- id_rsa.pub: The public key (this is the one you will add to the remote server's authorized_keys file).
+
+
+### Step 2: Configure Passwordless Login
+
+Run the following command to view the public key
+
+```bash
+cat ~/.ssh/id_rsa.pub
+```
+
+![alt text](image-15.png)
+
+Copy the output (public key).
 
 
 
 
+![alt text](image-16.png)
+![alt text](image-17.png)
+
+To ensure the authorized_keys file has the right permissions, run this in Windows PowerShell:
+
+```bash
+icacls "C:\Users\FYP Kita\.ssh\authorized_keys" /inheritance:r /grant:r "FYP Kita:F"
+```
+
+
+
+
+---
+
+![alt text](image-24.png)
+![alt text](image-25.png)
+![alt text](image-26.png)
+
+
+
+
+## Task 5: Hash Cracking Challenge
+
+### 1) SnZlcmV4IEF2IEpmcmNyZSBFeiBCcnJl
+
+Create a wordlist file first:
+```bash 
+nano custom_wordlist.txt   
+```
+
+
+![alt text](image-19.png)
+
+Then,crack
+
+![alt text](image-18.png)
+
+![alt text](image-23.png)
+
+### 2) 7b77ca1e2b3e7228a82ecbc7ca0e6b52
+ 
+```bash
+john --format=raw-md5 --wordlist=custom_wordlist.txt md5_hash.txt  
+```
+
+To confirm the cracked password, run the following command:
+
+```bash
+john --show --format=raw-md5 md5_hash.txt
+```
+
+To view all cracked passwords in the john.pot file by running:
+```bash
+cat ~/.john/john.pot
+```
+
+![alt text](image-20.png)
+
+### 3) e583cee9ab9d7626c970fd6e9938fcb2d06fbbd12f1c1a3c6902a215808c825c
+
+First create the file :
+
+```bash
+echo "e583cee9ab9d7626c970fd6e9938fcb2d06fbbd12f1c1a3c6902a215808c825c" > sha256_hash.txt
+```
+
+Then,crack:
+
+```bash
+john --format=raw-sha256 --wordlist=custom_wordlist.txt sha256_hash.txt
+```
+
+![alt text](image-21.png)
+
+Then,check:
+
+```bash
+cat ~/.john/john.pot 
+```
+
+![alt text](image-22.png)
