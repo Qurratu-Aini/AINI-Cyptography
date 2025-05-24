@@ -295,3 +295,11 @@ All the cracked hashes are stores in john.pot
 ## 🔍 Summary 
 
 This lab highlights the risks of using weak passwords and insecure hash functions such as unsalted MD5. It demonstrates how easily password hashes can be cracked using tools like John the Ripper. The exercise emphasizes the importance of implementing secure hashing algorithms (e.g., bcrypt, Argon2), enabling HTTPS to prevent plaintext credential transmission, and securing cookies with **`Secure`** and **`HttpOnly`** flags to protect against session hijacking and other web attacks.
+
+
+## Output For Decryption 
+
+![alt text](image-19.png)
+![alt text](image-20.png)
+![alt text](image-23.png)
+![alt text](image-22.png)
